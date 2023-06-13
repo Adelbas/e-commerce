@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - RedStore</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+</head>
+<body id="body">
+
+<div class="container">
+    <div class="navbar">
+        <div class="logo">
+            <a href="/"><img th:src="@{/images/logo.png}" width="125px" src=""></a>
+        </div>
+        <nav>
+            <ul id="MenuItems">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a href="/account">Account</a></li>
+            </ul>
+        </nav>
+        <a href="/cart"><img th:src="@{/images/cart.png}" width="30px" height="30px"></a>
+        <img th:src="@{/images/menu.png}" class="menu-icon" onclick="menutoggle()">
+    </div>
+</div>
+
+<!--------categories edit------->
+
+<div class="list-container">
+    <!--/*@thymesVar id="categories" type="java.util.List"*/-->
+    <h2 th:if="${categories==null or categories.isEmpty}">No categories found!</h2>
+    <div th:if="${categories!=null and !categories.isEmpty}">
+        <table>
+            <tr>
+                <th>Category Index</th>
+                <th>Category Name</th>
+                <th>Action</th>
+            </tr>
+            <!--/*@thymesVar id="category" type="com.adel.ecommerce.model.Category"*/-->
+            <tr th:each="category : ${categories}">
+                <td th:text="${category.id}"></td>
+                <td th:text="${category.name}"></td>
+                <td>
+                    <a th:href="@{category/update/{id}(id=${category.id})}">Edit</a>
+                    <a th:href="@{category/delete/{id}(id=${category.id})}">Delete</a>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <p><a href="category/create" class="btn">Create category</a></p>
+</div>
+
+<script>
+    var MenuItems=document.getElementById("MenuItems");
+    var body = document.getElementById("body");
+    function menutoggle(){
+        MenuItems.classList.toggle("active");
+        window.scrollTo(0,0);
+        body.classList.toggle("lock");
+    }
+</script>
+
+
+</body>
+</html>

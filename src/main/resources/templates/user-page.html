@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account - RedStore</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+</head>
+<body id="body">
+
+<div class="container">
+    <div class="navbar">
+        <div class="logo">
+            <a href="/"><img th:src="@{/images/logo.png}" width="125px" src=""></a>
+        </div>
+        <nav>
+            <ul id="MenuItems">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a href="/account">Account</a></li>
+            </ul>
+        </nav>
+        <a href="/cart"><img th:src="@{/images/cart.png}" width="30px" height="30px"></a>
+        <img th:src="@{/images/menu.png}" class="menu-icon" onclick="menutoggle()">
+    </div>
+</div>
+
+<!--------admin main page------->
+<div class="user-page">
+    <div class="user-container">
+        <!--/*@thymesVar id="user" type="com.adel.ecommerce.model.User"*/-->
+        <div sec:authorize="hasRole('ADMIN')">
+            <h2>Hello, Admin <span th:text="${user.getName()}"></span>!</h2>
+            <div class="row">
+                <div class="col-2">
+                    <a href="/admin/category" class="btn">Category list</a>
+                    <p><a href="/admin/category/create" class="btn">Create new category</a></p>
+                </div>
+                <div class="col-2">
+                    <a href="/admin/products/list" class="btn">Products list</a>
+                    <p><a href="/admin/products/create" class="btn">Create new product</a></p>
+                </div>
+            </div>
+        </div>
+        <div sec:authorize="hasRole('USER')">
+            <h2>Hello,
+            <span th:text="${user.getName()}"></span>!</h2>
+        </div>
+        <form th:action="@{/logout}" method="post">
+            <button class="logout-btn" type="submit"><i class="fa fa-sign-out"></i> Logout</button>
+        </form>
+    </div>
+</div>
+<script>
+    var MenuItems=document.getElementById("MenuItems");
+    var body = document.getElementById("body");
+    function menutoggle(){
+        MenuItems.classList.toggle("active");
+        window.scrollTo(0,0);
+        body.classList.toggle("lock");
+    }
+</script>
+
+
+</body>
+</html>

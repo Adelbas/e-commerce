@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - RedStore</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+</head>
+<body id="body">
+<div class="container">
+    <div class="navbar">
+        <div class="logo">
+            <a href="/"><img th:src="@{/images/logo.png}" width="125px" src=""></a>
+        </div>
+        <nav>
+            <ul id="MenuItems">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a href="/account">Account</a></li>
+            </ul>
+        </nav>
+        <a href="/cart"><img th:src="@{/images/cart.png}" width="30px" height="30px"></a>
+        <img th:src="@{/images/menu.png}" class="menu-icon" onclick="menutoggle()">
+    </div>
+</div>
+
+<!-------------account-page-------------->
+
+<div class="account-page">
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <img th:src="@{/images/image1.png}" width="100%">
+            </div>
+            <div class="col-2">
+                <div class="form-container" id="account-form">
+                    <div class="form-btn">
+                        <span onclick="login()">Login</span>
+                        <span onclick="register()">Register</span>
+                        <hr id="indicator">
+                    </div>
+
+                    <form id="loginForm" th:action="@{/login}" method="post">
+                        <div th:if="${param.error}" class="error">
+                            Invalid email or password.
+                        </div>
+                        <div th:if="${param.logout}" class="error">
+                            You have been logged out.
+                        </div>
+<!--                        <div th:if="${param.error!=null}" class="error">-->
+<!--                            <p th:text="${param.error}">e</p>-->
+<!--                            <script>-->
+<!--                                window.onload=function (){-->
+<!--                                    login();-->
+<!--                                };-->
+<!--                            </script>-->
+<!--                            You have successfully registered-->
+<!--                        </div>-->
+<!--                        <div class="error" th:if="${#fields.hasErrors('email')}"></div>-->
+                        <input type="email" placeholder="Email" name="username">
+                        <input type="password" placeholder="Password" name="password">
+                        <input type="checkbox" name="remember-me"/>Remember me
+                        <button type="submit" class="btn">Login</button>
+                        <a href="">Forgot password</a>
+                    </form>
+                    <div th:if="${reg}">
+                        <script>
+                            window.onload=function (){
+                                register();
+                            };
+                        </script>
+                    </div>
+                    <!--/*@thymesVar id="user" type="com.adel.ecommerce.model.User"*/-->
+                    <form id="regForm" th:action="@{/registration}" method="post" th:object="${user}">
+                        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+                        <input type="text" placeholder="Name" th:field="*{name} ">
+                        <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
+                        <input type="email" placeholder="Email" th:field="*{email}">
+                        <div class="error" th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></div>
+                        <input type="password" placeholder="Password" th:field="*{password}">
+                        <button type="submit" class="btn">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----footer---->
+<div class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="footer-col-1">
+                <h3>Download Our App</h3>
+                <p>Download App for Andorid and ios Mobile Phones.</p>
+                <div class="app-logo">
+                    <img th:src="@{/images/play-store.png}" alt="">
+                    <img th:src="@{/images/app-store.png}" alt="">
+                </div>
+            </div>
+            <div class="footer-col-2">
+                <img th:src="@{/images/logo-white.png}">
+                <p>Our Purpose Is To Sustainably Make the Pleasure and
+                    Benefits of Sports Accessible to the Many.</p>
+            </div>
+            <div class="footer-col-3">
+                <h3>Useful Links</h3>
+                <ul>
+                    <li>Coupons</li>
+                    <li>Blog Post</li>
+                    <li>Return Policy</li>
+                    <li>Join Affiliate</li>
+                </ul>
+            </div>
+            <div class="footer-col-4">
+                <h3>Follow us</h3>
+                <ul>
+                    <li>Facebook</li>
+                    <li>Twitter</li>
+                    <li>Instagram</li>
+                    <li>YouTube</li>
+                </ul>
+            </div>
+        </div>
+        <hr>
+        <p class="copyright">Copyright 2023 - Adel Mahmutov</p>
+    </div>
+</div>
+
+<script>
+    var MenuItems=document.getElementById("MenuItems");
+    var body = document.getElementById("body");
+    function menutoggle(){
+        MenuItems.classList.toggle("active");
+        window.scrollTo(0,0);
+        body.classList.toggle("lock");
+    }
+</script>
+
+<!----------------------js for toggle form---------------->
+<script>
+    var loginForm = document.getElementById("loginForm");
+    var regForm = document.getElementById("regForm");
+    var indicator = document.getElementById("indicator");
+    function  register(){
+        regForm.style.transform = "translateX(-300px)";
+        loginForm.style.transform = "translateX(-300px)";
+        indicator.style.transform = "translateX(100px)";
+    }
+    function  login(){
+        regForm.style.transform = "translateX(0px)";
+        loginForm.style.transform = "translateX(0px)";
+        indicator.style.transform = "translateX(0px)";
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Product - RedStore</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" rel="stylesheet"/>
+</head>
+<body id="body">
+
+<div class="container">
+    <div class="navbar">
+        <div class="logo">
+            <a href="/"><img th:src="@{/images/logo.png}" width="125px" src=""></a>
+        </div>
+        <nav>
+            <ul id="MenuItems">
+                <li><a href="/">Home</a></li>
+                <li><a href="/products">Products</a></li>
+                <li><a href="">About</a></li>
+                <li><a href="">Contact</a></li>
+                <li><a href="/account">Account</a></li>
+            </ul>
+        </nav>
+        <a href="/cart"><img th:src="@{/images/cart.png}" width="30px" height="30px"></a>
+        <img th:src="@{/images/menu.png}" class="menu-icon" onclick="menutoggle()">
+    </div>
+</div>
+<!--------product create------->
+<div th:if="${categories==null or categories.isEmpty}" class="list-container">
+    <h2>No categories found!</h2>
+    <p><a href="/category/create" class="btn">Create category</a></p>
+</div>
+<div th:if="${categories!=null and !categories.isEmpty}" class="form-create">
+    <h2>Create product</h2>
+    <!--/*@thymesVar id="product" type="com.adel.ecommerce.model.Product"*/-->
+    <form action="#" th:action="@{create}" th:object="${product}" method="post" enctype="multipart/form-data">
+        <input type="text" th:field="*{name}" id="name" placeholder="Product Name">
+        <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        <input type="number" th:field="*{price}" id="price"  placeholder="Price">
+        <div class="error" th:if="${#fields.hasErrors('price')}" th:errors="*{price}"></div>
+        <input type="number" th:field="*{quantity}" id="quantity" placeholder="Quantity">
+        <div class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></div>
+        <input type="text" th:field="*{description}" id="description" placeholder="Description">
+        <div class="error" th:if="${#fields.hasErrors('description')}" th:errors="*{description}"></div>
+        <!--/*@thymesVar id="category" type="com.adel.ecommerce.model.Category"*/-->
+        <p>
+        <select th:field="*{category}">
+            <option th:each="category : ${categories}" th:value="${category.getId}" th:text="${category.getName}">
+            </option>
+        </select>
+        <div class="error" th:if="${#fields.hasErrors('category')}" th:errors="*{category}"></div>
+        <div class="upload-container">
+            <input type="file" name="files" id="files" multiple>
+            <label for="files"><i class="fa fa-upload" aria-hidden="true"></i> Choose A Photo</label>
+            <div id="num-of-files">No Files Chosen</div>
+        </div>
+        <div class="upload-list">
+            <ul id="files-list"></ul>
+        </div>
+        <div class="error" th:if="${#fields.hasErrors('images')}" th:errors="*{images}"></div>
+        <button type="submit" class="btn" onclick="butfun()">Create</button>
+    </form>
+</div>
+
+
+<script>
+    var MenuItems=document.getElementById("MenuItems");
+    var body = document.getElementById("body");
+    function menutoggle(){
+        MenuItems.classList.toggle("active");
+        window.scrollTo(0,0);
+        body.classList.toggle("lock");
+    }
+    if(document.getElementById("price").value=="0")
+        document.getElementById("price").value="";
+    if(document.getElementById("quantity").value=="0")
+        document.getElementById("quantity").value="";
+
+    var btn = document.getElementById("btn");
+    function butfun() {
+        if(document.getElementById("price").value=="")
+            document.getElementById("price").value="0"
+        if(document.getElementById("quantity").value=="")
+            document.getElementById("quantity").value="0"
+    }
+
+    let fileInput=document.getElementById("files");
+    let filesList = document.getElementById("files-list")
+    let numOfFiles = document.getElementById("num-of-files");
+
+    fileInput.addEventListener("change", ()=>{
+        filesList.innerHTML="";
+        numOfFiles.textContent=fileInput.files.length+' Files Selected';
+        for(i of fileInput.files){
+            let reader = new FileReader();
+            let listItem = document.createElement("li");
+            let fileName = i.name;
+            listItem.innerHTML=fileName;
+            filesList.appendChild(listItem);
+        }
+
+    });
+</script>
+
+</body>
+</html>
