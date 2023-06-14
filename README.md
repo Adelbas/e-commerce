@@ -15,3 +15,24 @@ E-commerce shop wtih roles
 * Lombok
 * HTML, CSS, Thymeleaf
 * PostgreSQL
+## Endpoints:
+### User:
+* GET /
+* GET /products
+* GET /products/id
+* GET /account
+* GET /login
+* GET /registration
+* GET /cart
+* POST /login
+* POST /registration
+* POST /add/id
+### Admin:
+* GET /products/list
+* GET /products/create
+* GET /category
+* GET /category/create
+* POST /category/create
+* POST /category/delete/id
+* POST /products/create
+* POST /products/delete/id
