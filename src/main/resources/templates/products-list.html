@@ -60,8 +60,9 @@
                 </td>
                 <td>
                     <a th:href="@{update/{id}(id=${product.id})}">Edit</a>
-                    <a th:href="@{delete/{id}(id=${product.id})}">Delete</a>
-<!--                    <a th:href="@{category/delete/{id}(id=${category.id})}">Delete</a>-->
+                    <form th:action="@{delete/{id}(id=${product.id})}" method="post">
+                        <button class="delete-btn" type="submit">Delete</button>
+                    </form>
                 </td>
             </tr>
         </table>

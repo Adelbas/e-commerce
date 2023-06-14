@@ -50,7 +50,9 @@
                 <td th:text="${category.name}"></td>
                 <td>
                     <a th:href="@{category/update/{id}(id=${category.id})}">Edit</a>
-                    <a th:href="@{category/delete/{id}(id=${category.id})}">Delete</a>
+                    <form th:action="@{category/delete/{id}(id=${category.id})}" method="post">
+                        <button class="delete-btn" type="submit">Delete</button>
+                    </form>
                 </td>
             </tr>
         </table>

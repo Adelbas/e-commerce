@@ -55,6 +55,10 @@ public class UserController {
         userService.createUser(user);
         return "redirect:/login";
     }
+    @GetMapping("/registration")
+    public String getRegistration(){
+        return "redirect:/login";
+    }
     @GetMapping("/account")
     public String getAccount(@AuthenticationPrincipal User user, Model model){
         model.addAttribute("user",user);

@@ -50,7 +50,7 @@ public class AdminController {
         return "redirect:/admin/products/list";
     }
 
-    @GetMapping("/products/delete/{id}")
+    @PostMapping("/products/delete/{id}")
     public String deleteProduct(@PathVariable Long id) {
         productService.deleteProduct(id);
         return "redirect:/admin/products/list";
@@ -80,7 +80,7 @@ public class AdminController {
         return "redirect:/admin/category";
     }
 
-    @GetMapping("/category/delete/{id}")
+    @PostMapping("/category/delete/{id}")
     public String deleteCategory(@PathVariable Long id) {
         categoryService.deleteCategory(id);
         return "redirect:/admin/category";

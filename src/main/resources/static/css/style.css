@@ -112,6 +112,18 @@ p{
 .list-container th:last-child{
     text-align: center;
 }
+.list-container form{
+    display: inline-flex;
+}
+.delete-btn{
+    font-size: 20px;
+    margin-left: 10px;
+    text-decoration: none;
+    background: none;
+    color: #ff523b;
+    border: none;
+    cursor: pointer;
+}
 .col-4{
     flex-basis: 25%;
     padding: 10px;
